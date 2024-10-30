@@ -62,7 +62,7 @@ deploy-job:      # This job runs in the deploy stage.
   environment: test
   needs: [unit-test-job]
   tags:
-    - bash
+    - docker
   script:
     - echo "Deploying application..."
     - docker stop $CI_PROJECT_NAME
@@ -86,7 +86,7 @@ deploy-prod:      # This job runs in the deploy stage.
   stage: production  # It only runs when *both* jobs in the test stage complete successfully.
   environment: production  
   tags:
-    - bash
+    - docker
   script:
     - echo "Deploying application to prod..."
     - echo "Application successfully deployed."
