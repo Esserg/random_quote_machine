@@ -64,6 +64,9 @@ deploy-job:      # This job runs in the deploy stage.
     - bash
   script:
     - echo "Deploying application..."
+    - docker stop $CI_PROJECT_NAME
+    - docker rm $CI_PROJECT_NAME
+    - docker run -d --name $CI_PROJECT_NAME -p 80:80 $CI_PROJECT_NAME:$CI_ENVIRONMENT_NAME
     - echo "Application successfully deployed."
 
 approve:prod:
