@@ -66,9 +66,8 @@ approve:prod:
   stage: approve
   tags:
     - bash
-  only:
-    - tags
-    - main
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main" && "$CI_COMMIT_TAG"
   script:
     - echo "Approve" $GITLAB_USER_NAME
   when: manual
@@ -82,7 +81,6 @@ deploy-prod:      # This job runs in the deploy stage.
   script:
     - echo "Deploying application to prod..."
     - echo "Application successfully deployed."
-  only:
-    - tags
-    - main
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main" && "$CI_COMMIT_TAG"
   when: on_success
