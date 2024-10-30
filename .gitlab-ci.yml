@@ -19,7 +19,9 @@
 stages:          # List of stages for jobs, and their order of execution
   - build
   - test
-  - deploy
+  - deploy_test
+  - approve
+  - production
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
@@ -44,8 +46,27 @@ lint-test-job:   # This job also runs in the test stage.
     - echo "No lint issues found."
 
 deploy-job:      # This job runs in the deploy stage.
-  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
-  environment: production
+  stage: deploy_test  # It only runs when *both* jobs in the test stage complete successfully.
+  environment: test
   script:
     - echo "Deploying application..."
     - echo "Application successfully deployed."
+
+approve:prod:
+  stage: approve
+  only:
+    - tags
+  script:
+    - echo "Approve" $GITLAB_USER_NAME
+  when: manual
+  allow_failure: false
+
+deploy-prod:      # This job runs in the deploy stage.
+  stage: production  # It only runs when *both* jobs in the test stage complete successfully.
+  environment: production  
+  script:
+    - echo "Deploying application to prod..."
+    - echo "Application successfully deployed."
+  only:
+    - tags
+  when: on_success
