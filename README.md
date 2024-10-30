@@ -1,3 +1,5 @@
+[![pipeline status](https://gitlab.com/essernik/random_quote_machine/badges/main/pipeline.svg)](https://gitlab.com/essernik/random_quote_machine/-/commits/main)
+
 ### `npm start`
 
 Runs the app in the development mode.<br>
