@@ -6,14 +6,15 @@ pipeline {
         // Извлекаем проект из репозитория 
         stage('Checkout') { 
             steps {
-                echo 'Checkout'
+                git branch: 'main', url: 'https://github.com/Esserg/random_quote_machine.git'
             }
         }
         
         // Собираем проект. Получаем на выходе пакетный файл или билд 
         stage('Build') { 
             steps {
-                echo 'Build'
+                sh 'docker build -t 192.168.10.20:5000/random_quote_machine:0.$BUILD_ID'
+                sh 'docker push 192.168.10.20:5000/random_quote_machine:0.$BUILD_ID'
             }
         }
 
