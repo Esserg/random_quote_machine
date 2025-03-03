@@ -13,8 +13,8 @@ pipeline {
         // Собираем проект. Получаем на выходе пакетный файл или билд 
         stage('Build') { 
             steps {
-                sh 'docker build -t 192.168.10.20:5000/random_quote_machine:0.$BUILD_ID .'
-                sh 'docker push 192.168.10.20:5000/random_quote_machine:0.$BUILD_ID'
+                sh 'docker build -t 192.168.10.20:5000/random_quote_machine:test .'
+                sh 'docker push 192.168.10.20:5000/random_quote_machine:test'
             }
         }
 
@@ -22,6 +22,7 @@ pipeline {
         stage('Deploy') { 
             steps {
                 echo 'Deploy'
+                curl -I https://192.168.10.20:9443/api/webhooks/88f69f4f-c39d-4353-ad7b-997db4c01af8
             }
         }
     }
